@@ -292,6 +292,7 @@ function _callback() {
         return res.status(500).redirect("".concat(baseUrl).concat(basePath, "/error?error=Configuration"));
       }
 
+      var credentials = req.body;
       var userObjectReturnedFromAuthorizeHandler;
 
       try {

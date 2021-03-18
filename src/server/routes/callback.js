@@ -329,7 +329,7 @@ export default async function callback(req, res) {
         .redirect(`${baseUrl}${basePath}/error?error=Configuration`);
     }
 
-    // const credentials = req.body
+    const credentials = req.body;
 
     let userObjectReturnedFromAuthorizeHandler;
     try {
