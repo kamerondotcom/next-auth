@@ -35,7 +35,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var Adapter = function Adapter(typeOrmConfig) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var typeOrmConfigObject = typeof typeOrmConfig === 'string' ? _config.default.parseConnectionString(typeOrmConfig) : typeOrmConfig;
+  var typeOrmConfigObject = typeof typeOrmConfig === "string" ? _config.default.parseConnectionString(typeOrmConfig) : typeOrmConfig;
   var {
     models: customModels = {}
   } = options;
@@ -94,34 +94,34 @@ var Adapter = function Adapter(typeOrmConfig) {
         try {
           connection = yield (0, _typeorm.createConnection)(config);
         } catch (error) {
-          if (error.name === 'AlreadyHasActiveConnectionError') {
+          if (error.name === "AlreadyHasActiveConnectionError") {
             yield _connect();
           } else {
-            logger.error('ADAPTER_CONNECTION_ERROR', error);
+            logger.error("ADAPTER_CONNECTION_ERROR", error);
           }
         }
       } else {
         yield _connect();
       }
 
-      if (process.env.NODE_ENV !== 'production') {
+      if (process.env.NODE_ENV !== "production") {
         yield (0, _utils.updateConnectionEntities)(connection, config.entities);
       }
 
       var {
         manager
       } = connection;
-      var idKey = 'id';
+      var idKey = "id";
       var ObjectId;
 
-      if (config.type === 'mongodb') {
-        idKey = '_id';
-        var mongodb = (0, _require_optional.default)('mongodb');
+      if (config.type === "mongodb") {
+        idKey = "_id";
+        var mongodb = (0, _require_optional.default)("mongodb");
         ObjectId = mongodb.ObjectId;
       }
 
       if (appOptions && (!appOptions.session || !appOptions.session.maxAge)) {
-        debug('GET_ADAPTER', 'Session expiry not configured (defaulting to 30 days');
+        debug("GET_ADAPTER", "Session expiry not configured (defaulting to 30 days");
       }
 
       var defaultSessionMaxAge = 30 * 24 * 60 * 60 * 1000;
@@ -134,13 +134,13 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _createUser() {
         _createUser = _asyncToGenerator(function* (profile) {
-          debug('CREATE_USER', profile);
+          debug("CREATE_USER", profile);
 
           try {
-            var user = new User(profile.name, profile.email, profile.image, profile.emailVerified);
+            var user = new User(profile.name, profile.email, profile.image, profile.emailVerified, profile.agoraId);
             return yield manager.save(user);
           } catch (error) {
-            logger.error('CREATE_USER_ERROR', error);
+            logger.error("CREATE_USER_ERROR", error);
             return Promise.reject(new _errors.CreateUserError(error));
           }
         });
@@ -153,7 +153,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _getUser() {
         _getUser = _asyncToGenerator(function* (id) {
-          debug('GET_USER', id);
+          debug("GET_USER", id);
 
           if (ObjectId && !(id instanceof ObjectId)) {
             id = ObjectId(id);
@@ -164,8 +164,8 @@ var Adapter = function Adapter(typeOrmConfig) {
               [idKey]: id
             });
           } catch (error) {
-            logger.error('GET_USER_BY_ID_ERROR', error);
-            return Promise.reject(new Error('GET_USER_BY_ID_ERROR', error));
+            logger.error("GET_USER_BY_ID_ERROR", error);
+            return Promise.reject(new Error("GET_USER_BY_ID_ERROR", error));
           }
         });
         return _getUser.apply(this, arguments);
@@ -177,7 +177,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _getUserByEmail() {
         _getUserByEmail = _asyncToGenerator(function* (email) {
-          debug('GET_USER_BY_EMAIL', email);
+          debug("GET_USER_BY_EMAIL", email);
 
           try {
             if (!email) {
@@ -188,8 +188,8 @@ var Adapter = function Adapter(typeOrmConfig) {
               email
             });
           } catch (error) {
-            logger.error('GET_USER_BY_EMAIL_ERROR', error);
-            return Promise.reject(new Error('GET_USER_BY_EMAIL_ERROR', error));
+            logger.error("GET_USER_BY_EMAIL_ERROR", error);
+            return Promise.reject(new Error("GET_USER_BY_EMAIL_ERROR", error));
           }
         });
         return _getUserByEmail.apply(this, arguments);
@@ -201,7 +201,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _getUserByProviderAccountId() {
         _getUserByProviderAccountId = _asyncToGenerator(function* (providerId, providerAccountId) {
-          debug('GET_USER_BY_PROVIDER_ACCOUNT_ID', providerId, providerAccountId);
+          debug("GET_USER_BY_PROVIDER_ACCOUNT_ID", providerId, providerAccountId);
 
           try {
             var account = yield manager.findOne(Account, {
@@ -217,8 +217,8 @@ var Adapter = function Adapter(typeOrmConfig) {
               [idKey]: account.userId
             });
           } catch (error) {
-            logger.error('GET_USER_BY_PROVIDER_ACCOUNT_ID_ERROR', error);
-            return Promise.reject(new Error('GET_USER_BY_PROVIDER_ACCOUNT_ID_ERROR', error));
+            logger.error("GET_USER_BY_PROVIDER_ACCOUNT_ID_ERROR", error);
+            return Promise.reject(new Error("GET_USER_BY_PROVIDER_ACCOUNT_ID_ERROR", error));
           }
         });
         return _getUserByProviderAccountId.apply(this, arguments);
@@ -230,7 +230,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _updateUser() {
         _updateUser = _asyncToGenerator(function* (user) {
-          debug('UPDATE_USER', user);
+          debug("UPDATE_USER", user);
           return manager.save(User, user);
         });
         return _updateUser.apply(this, arguments);
@@ -242,7 +242,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _deleteUser() {
         _deleteUser = _asyncToGenerator(function* (userId) {
-          debug('DELETE_USER', userId);
+          debug("DELETE_USER", userId);
           return false;
         });
         return _deleteUser.apply(this, arguments);
@@ -254,14 +254,14 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _linkAccount() {
         _linkAccount = _asyncToGenerator(function* (userId, providerId, providerType, providerAccountId, refreshToken, accessToken, accessTokenExpires) {
-          debug('LINK_ACCOUNT', userId, providerId, providerType, providerAccountId, refreshToken, accessToken, accessTokenExpires);
+          debug("LINK_ACCOUNT", userId, providerId, providerType, providerAccountId, refreshToken, accessToken, accessTokenExpires);
 
           try {
             var account = new Account(userId, providerId, providerType, providerAccountId, refreshToken, accessToken, accessTokenExpires);
             return manager.save(account);
           } catch (error) {
-            logger.error('LINK_ACCOUNT_ERROR', error);
-            return Promise.reject(new Error('LINK_ACCOUNT_ERROR', error));
+            logger.error("LINK_ACCOUNT_ERROR", error);
+            return Promise.reject(new Error("LINK_ACCOUNT_ERROR", error));
           }
         });
         return _linkAccount.apply(this, arguments);
@@ -273,7 +273,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _unlinkAccount() {
         _unlinkAccount = _asyncToGenerator(function* (userId, providerId, providerAccountId) {
-          debug('UNLINK_ACCOUNT', userId, providerId, providerAccountId);
+          debug("UNLINK_ACCOUNT", userId, providerId, providerAccountId);
           return false;
         });
         return _unlinkAccount.apply(this, arguments);
@@ -285,7 +285,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _createSession() {
         _createSession = _asyncToGenerator(function* (user) {
-          debug('CREATE_SESSION', user);
+          debug("CREATE_SESSION", user);
 
           try {
             var expires = null;
@@ -299,8 +299,8 @@ var Adapter = function Adapter(typeOrmConfig) {
             var session = new Session(user.id, expires);
             return manager.save(session);
           } catch (error) {
-            logger.error('CREATE_SESSION_ERROR', error);
-            return Promise.reject(new Error('CREATE_SESSION_ERROR', error));
+            logger.error("CREATE_SESSION_ERROR", error);
+            return Promise.reject(new Error("CREATE_SESSION_ERROR", error));
           }
         });
         return _createSession.apply(this, arguments);
@@ -312,7 +312,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _getSession() {
         _getSession = _asyncToGenerator(function* (sessionToken) {
-          debug('GET_SESSION', sessionToken);
+          debug("GET_SESSION", sessionToken);
 
           try {
             var session = yield manager.findOne(Session, {
@@ -325,8 +325,8 @@ var Adapter = function Adapter(typeOrmConfig) {
 
             return session;
           } catch (error) {
-            logger.error('GET_SESSION_ERROR', error);
-            return Promise.reject(new Error('GET_SESSION_ERROR', error));
+            logger.error("GET_SESSION_ERROR", error);
+            return Promise.reject(new Error("GET_SESSION_ERROR", error));
           }
         });
         return _getSession.apply(this, arguments);
@@ -338,7 +338,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _updateSession() {
         _updateSession = _asyncToGenerator(function* (session, force) {
-          debug('UPDATE_SESSION', session);
+          debug("UPDATE_SESSION", session);
 
           try {
             if (sessionMaxAge && (sessionUpdateAge || sessionUpdateAge === 0) && session.expires) {
@@ -361,8 +361,8 @@ var Adapter = function Adapter(typeOrmConfig) {
 
             return manager.save(Session, session);
           } catch (error) {
-            logger.error('UPDATE_SESSION_ERROR', error);
-            return Promise.reject(new Error('UPDATE_SESSION_ERROR', error));
+            logger.error("UPDATE_SESSION_ERROR", error);
+            return Promise.reject(new Error("UPDATE_SESSION_ERROR", error));
           }
         });
         return _updateSession.apply(this, arguments);
@@ -374,15 +374,15 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _deleteSession() {
         _deleteSession = _asyncToGenerator(function* (sessionToken) {
-          debug('DELETE_SESSION', sessionToken);
+          debug("DELETE_SESSION", sessionToken);
 
           try {
             return yield manager.delete(Session, {
               sessionToken
             });
           } catch (error) {
-            logger.error('DELETE_SESSION_ERROR', error);
-            return Promise.reject(new Error('DELETE_SESSION_ERROR', error));
+            logger.error("DELETE_SESSION_ERROR", error);
+            return Promise.reject(new Error("DELETE_SESSION_ERROR", error));
           }
         });
         return _deleteSession.apply(this, arguments);
@@ -394,7 +394,7 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _createVerificationRequest() {
         _createVerificationRequest = _asyncToGenerator(function* (identifier, url, token, secret, provider) {
-          debug('CREATE_VERIFICATION_REQUEST', identifier);
+          debug("CREATE_VERIFICATION_REQUEST", identifier);
 
           try {
             var {
@@ -404,7 +404,7 @@ var Adapter = function Adapter(typeOrmConfig) {
               sendVerificationRequest,
               maxAge
             } = provider;
-            var hashedToken = (0, _crypto.createHash)('sha256').update("".concat(token).concat(secret)).digest('hex');
+            var hashedToken = (0, _crypto.createHash)("sha256").update("".concat(token).concat(secret)).digest("hex");
             var expires = null;
 
             if (maxAge) {
@@ -424,8 +424,8 @@ var Adapter = function Adapter(typeOrmConfig) {
             });
             return verificationRequest;
           } catch (error) {
-            logger.error('CREATE_VERIFICATION_REQUEST_ERROR', error);
-            return Promise.reject(new Error('CREATE_VERIFICATION_REQUEST_ERROR', error));
+            logger.error("CREATE_VERIFICATION_REQUEST_ERROR", error);
+            return Promise.reject(new Error("CREATE_VERIFICATION_REQUEST_ERROR", error));
           }
         });
         return _createVerificationRequest.apply(this, arguments);
@@ -437,10 +437,10 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _getVerificationRequest() {
         _getVerificationRequest = _asyncToGenerator(function* (identifier, token, secret, provider) {
-          debug('GET_VERIFICATION_REQUEST', identifier, token);
+          debug("GET_VERIFICATION_REQUEST", identifier, token);
 
           try {
-            var hashedToken = (0, _crypto.createHash)('sha256').update("".concat(token).concat(secret)).digest('hex');
+            var hashedToken = (0, _crypto.createHash)("sha256").update("".concat(token).concat(secret)).digest("hex");
             var verificationRequest = yield manager.findOne(VerificationRequest, {
               identifier,
               token: hashedToken
@@ -456,8 +456,8 @@ var Adapter = function Adapter(typeOrmConfig) {
 
             return verificationRequest;
           } catch (error) {
-            logger.error('GET_VERIFICATION_REQUEST_ERROR', error);
-            return Promise.reject(new Error('GET_VERIFICATION_REQUEST_ERROR', error));
+            logger.error("GET_VERIFICATION_REQUEST_ERROR", error);
+            return Promise.reject(new Error("GET_VERIFICATION_REQUEST_ERROR", error));
           }
         });
         return _getVerificationRequest.apply(this, arguments);
@@ -469,17 +469,17 @@ var Adapter = function Adapter(typeOrmConfig) {
 
       function _deleteVerificationRequest() {
         _deleteVerificationRequest = _asyncToGenerator(function* (identifier, token, secret, provider) {
-          debug('DELETE_VERIFICATION', identifier, token);
+          debug("DELETE_VERIFICATION", identifier, token);
 
           try {
-            var hashedToken = (0, _crypto.createHash)('sha256').update("".concat(token).concat(secret)).digest('hex');
+            var hashedToken = (0, _crypto.createHash)("sha256").update("".concat(token).concat(secret)).digest("hex");
             yield manager.delete(VerificationRequest, {
               identifier,
               token: hashedToken
             });
           } catch (error) {
-            logger.error('DELETE_VERIFICATION_REQUEST_ERROR', error);
-            return Promise.reject(new Error('DELETE_VERIFICATION_REQUEST_ERROR', error));
+            logger.error("DELETE_VERIFICATION_REQUEST_ERROR", error);
+            return Promise.reject(new Error("DELETE_VERIFICATION_REQUEST_ERROR", error));
           }
         });
         return _deleteVerificationRequest.apply(this, arguments);

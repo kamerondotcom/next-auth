@@ -27,9 +27,9 @@ function callbackHandler(_x, _x2, _x3, _x4) {
 
 function _callbackHandler() {
   _callbackHandler = _asyncToGenerator(function* (sessionToken, profile, providerAccount, options) {
-    if (!profile) throw new Error('Missing profile');
-    if (!(providerAccount !== null && providerAccount !== void 0 && providerAccount.id) || !providerAccount.type) throw new Error('Missing or invalid provider account');
-    if (!['email', 'oauth'].includes(providerAccount.type)) throw new Error('Provider not supported');
+    if (!profile) throw new Error("Missing profile");
+    if (!(providerAccount !== null && providerAccount !== void 0 && providerAccount.id) || !providerAccount.type) throw new Error("Missing or invalid provider account");
+    if (!["email", "oauth"].includes(providerAccount.type)) throw new Error("Provider not supported");
     var {
       adapter,
       jwt,
@@ -89,7 +89,7 @@ function _callbackHandler() {
       }
     }
 
-    if (providerAccount.type === 'email') {
+    if (providerAccount.type === "email") {
       var userByEmail = profile.email ? yield getUserByEmail(profile.email) : null;
 
       if (userByEmail) {
@@ -120,7 +120,7 @@ function _callbackHandler() {
         user,
         isNewUser
       };
-    } else if (providerAccount.type === 'oauth') {
+    } else if (providerAccount.type === "oauth") {
       var userByProviderAccountId = yield getUserByProviderAccountId(providerAccount.provider, providerAccount.id);
 
       if (userByProviderAccountId) {

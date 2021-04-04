@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.UserSchema = exports.User = void 0;
 
 class User {
-  constructor(name, email, image, emailVerified) {
+  constructor(name, email, image, emailVerified, agoraId) {
     if (name) {
       this.name = name;
     }
@@ -23,43 +23,47 @@ class User {
       var currentDate = new Date();
       this.emailVerified = currentDate;
     }
+
+    if (agoraId) {
+      this.agoraId = agoraId;
+    }
   }
 
 }
 
 exports.User = User;
 var UserSchema = {
-  name: 'User',
+  name: "User",
   target: User,
   columns: {
     id: {
       primary: true,
-      type: 'int',
+      type: "int",
       generated: true
     },
     name: {
-      type: 'varchar',
+      type: "varchar",
       nullable: true
     },
     email: {
-      type: 'varchar',
+      type: "varchar",
       unique: true,
       nullable: true
     },
     emailVerified: {
-      type: 'timestamp',
+      type: "timestamp",
       nullable: true
     },
     image: {
-      type: 'varchar',
+      type: "varchar",
       nullable: true
     },
     createdAt: {
-      type: 'timestamp',
+      type: "timestamp",
       createDate: true
     },
     updatedAt: {
-      type: 'timestamp',
+      type: "timestamp",
       updateDate: true
     }
   }
