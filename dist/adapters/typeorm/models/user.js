@@ -59,8 +59,8 @@ var UserSchema = {
       nullable: true
     },
     agoraId: {
-      type: "int",
-      unique: true
+      type: "varchar",
+      nullable: true
     },
     createdAt: {
       type: "timestamp",
