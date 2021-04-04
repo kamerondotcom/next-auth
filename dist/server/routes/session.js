@@ -80,9 +80,9 @@ function _session() {
           jwt: jwtPayload
         });
       } catch (error) {
-        _logger.default.error('JWT_SESSION_ERROR', error);
+        _logger.default.error("JWT_SESSION_ERROR", error);
 
-        cookie.set(res, cookies.sessionToken.name, '', _objectSpread(_objectSpread({}, cookies.sessionToken.options), {}, {
+        cookie.set(res, cookies.sessionToken.name, "", _objectSpread(_objectSpread({}, cookies.sessionToken.options), {}, {
           maxAge: 0
         }));
       }
@@ -103,7 +103,8 @@ function _session() {
             user: {
               name: user.name,
               email: user.email,
-              image: user.image
+              image: user.image,
+              agoraId: user.agoraId
             },
             accessToken: _session2.accessToken,
             expires: _session2.expires
@@ -119,12 +120,12 @@ function _session() {
             session: _sessionPayload
           });
         } else if (sessionToken) {
-          cookie.set(res, cookies.sessionToken.name, '', _objectSpread(_objectSpread({}, cookies.sessionToken.options), {}, {
+          cookie.set(res, cookies.sessionToken.name, "", _objectSpread(_objectSpread({}, cookies.sessionToken.options), {}, {
             maxAge: 0
           }));
         }
       } catch (error) {
-        _logger.default.error('SESSION_ERROR', error);
+        _logger.default.error("SESSION_ERROR", error);
       }
     }
 

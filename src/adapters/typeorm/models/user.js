@@ -56,7 +56,6 @@ export const UserSchema = {
       nullable: true,
     },
     agoraId: {
-      // This property has `objectId: true` instead of `type: int` in MongoDB
       type: "int",
       unique: true,
     },
