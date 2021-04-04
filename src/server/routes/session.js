@@ -23,6 +23,7 @@ export default async function session(req, res) {
       // Decrypt and verify token
       const decodedJwt = await jwt.decode({ ...jwt, token: sessionToken });
 
+      console.log("decodedJwt", decodedJwt);
       // Generate new session expiry date
       const sessionExpiresDate = new Date();
       sessionExpiresDate.setTime(
