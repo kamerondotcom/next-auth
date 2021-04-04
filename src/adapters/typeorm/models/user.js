@@ -55,6 +55,11 @@ export const UserSchema = {
       type: "varchar",
       nullable: true,
     },
+    agoraId: {
+      // This property has `objectId: true` instead of `type: int` in MongoDB
+      type: "int",
+      unique: true,
+    },
     createdAt: {
       type: "timestamp",
       createDate: true,
