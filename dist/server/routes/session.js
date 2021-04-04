@@ -48,6 +48,7 @@ function _session() {
       return res.json({});
     }
 
+    console.log("useJwtSession", useJwtSession);
     var response = {};
 
     if (useJwtSession) {

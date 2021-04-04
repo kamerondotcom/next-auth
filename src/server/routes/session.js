@@ -16,6 +16,7 @@ export default async function session(req, res) {
     return res.json({});
   }
 
+  console.log("useJwtSession", useJwtSession);
   let response = {};
   if (useJwtSession) {
     try {
