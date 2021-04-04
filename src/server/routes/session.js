@@ -96,6 +96,8 @@ export default async function session(req, res) {
           expires: session.expires,
         };
 
+        console.log("defaultSessionPayload", defaultSessionPayload);
+
         // Pass Session through to the session callback
         const sessionPayload = await callbacks.session(
           defaultSessionPayload,

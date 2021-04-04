@@ -109,6 +109,7 @@ function _session() {
             accessToken: _session2.accessToken,
             expires: _session2.expires
           };
+          console.log("defaultSessionPayload", _defaultSessionPayload);
 
           var _sessionPayload = yield callbacks.session(_defaultSessionPayload, user);
 
