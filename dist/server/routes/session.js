@@ -48,7 +48,6 @@ function _session() {
       return res.json({});
     }
 
-    console.log("useJwtSession", useJwtSession);
     var response = {};
 
     if (useJwtSession) {
@@ -56,7 +55,6 @@ function _session() {
         var decodedJwt = yield jwt.decode(_objectSpread(_objectSpread({}, jwt), {}, {
           token: sessionToken
         }));
-        console.log("decodedJwt", decodedJwt);
         var sessionExpiresDate = new Date();
         sessionExpiresDate.setTime(sessionExpiresDate.getTime() + sessionMaxAge * 1000);
         var sessionExpires = sessionExpiresDate.toISOString();
